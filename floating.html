@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Floating Hearts Animation</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+        height: 100vh;
+        width: 100vw;
+      }
+      .heart {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        transform: translateX(-50%) scale(1);
+        opacity: 0.8;
+        pointer-events: none;
+        animation: floatUp 4s linear forwards;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateX(-50%) scale(1) translateY(0);
+          opacity: 0.8;
+        }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(-50%) scale(1.2) translateY(-100vh);
+          opacity: 0;
+        }
+      }
+      .center-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #e75480;
+        text-shadow: 2px 2px 8px #fff, 0 0 10px #ee9ca7;
+        z-index: 10;
+        font-family: "Segoe UI", "Arial", sans-serif;
+        letter-spacing: 1px;
+        text-align: center;
+        padding: 16px 32px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        box-shadow: 0 4px 24px rgba(231, 84, 128, 0.12);
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-message">Chúc em bé đáng yêu của anh 1/6 vui vẻeee</div>
+    <script>
+      // List of direct image links from Google Drive
+      const imageLinks = [
+        "https://github.com/images244/images/blob/main/436667537_25528826973432817_1662334648523323442_n.jpg?raw=true",
+        "https://github.com/images244/images/blob/main/440760359_26100868562860541_4742174040789381357_n.jpg?raw=true",
+        "https://github.com/images244/images/blob/main/448462944_367154172685261_3795214300647394035_n.jpg?raw=true",
+        "https://github.com/images244/images/blob/main/FB_IMG_1707303309743.jpg?raw=true",
+        "https://github.com/images244/images/blob/main/z6038813742923_31e6ea69feb3e672cd932ffaa581131b.jpg?raw=true",
+        "https://github.com/images244/images/blob/main/z6111077284178_d2e6a86da0dd8315d88facbddd6f7be1.jpg?raw=true",
+        "https://github.com/images244/images/blob/main/z6111161580965_a44b354503841ee9c1bba127ea4c9d8f.jpg?raw=true",
+        "https://github.com/images244/images/blob/main/z6305252785151_90ce312a95244674e26acb986b15b1a8.jpg?raw=true",
+        "https://github.com/images244/images/blob/main/z6492950488319_bfd9d77ac440e06e9ed69005ae9b82d0.jpg?raw=true",
+        "https://github.com/images244/images/blob/main/z6649318662642_18f4b50f4ac7aef04a17ca116f264fce.jpg?raw=true",
+      ];
+
+      function createHeartOrImage() {
+        // 50% chance to create a heart, 50% to create an image
+        if (Math.random() < 0.5) {
+          createHeart();
+        } else {
+          createFloatingImage();
+        }
+      }
+
+      function createHeart() {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        const color = `hsl(${Math.random() * 360}, 80%, 70%)`;
+        heart.innerHTML = `
+        <svg viewBox="0 0 32 29.6" width="40" height="40">
+          <path d="M23.6,0c-2.7,0-5.1,1.3-6.6,3.3C15.5,1.3,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4c0,11.1,16,19.2,16,19.2s16-8.1,16-19.2
+            C32,4.7,27.3,0,23.6,0z" fill="${color}"/>
+        </svg>
+      `;
+        // Randomize horizontal position
+        heart.style.left = Math.random() * 100 + "vw";
+        // Randomize size
+        const scale = 0.7 + Math.random() * 0.8;
+        heart.style.transform = `translateX(-50%) scale(${scale})`;
+        // Randomize animation duration
+        const duration = 3 + Math.random() * 2;
+        heart.style.animationDuration = duration + "s";
+        document.body.appendChild(heart);
+        // Remove heart after animation
+        setTimeout(() => {
+          heart.remove();
+        }, duration * 1000);
+      }
+
+      function createFloatingImage() {
+        const img = document.createElement("img");
+        img.className = "heart"; // reuse heart class for animation
+        img.src = imageLinks[Math.floor(Math.random() * imageLinks.length)];
+        // Increase size 4x
+        img.style.width = "160px";
+        img.style.height = "160px";
+        // Randomize horizontal position
+        img.style.left = Math.random() * 100 + "vw";
+        // Randomize size (scale up 4x)
+        const scale = 0.7 + Math.random() * 0.8;
+        img.style.transform = `translateX(-50%) scale(${scale * 4})`;
+        // Randomize animation duration
+        const duration = 3 + Math.random() * 2;
+        img.style.animationDuration = duration + "s";
+        img.style.objectFit = "contain";
+        img.style.background = "rgba(255,255,255,0.1)";
+        document.body.appendChild(img);
+        setTimeout(() => {
+          img.remove();
+        }, duration * 1000);
+      }
+
+      setInterval(createHeartOrImage, 300);
+    </script>
+  </body>
+</html>
